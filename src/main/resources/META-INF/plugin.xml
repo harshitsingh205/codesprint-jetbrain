@@ -1,0 +1,97 @@
+<idea-plugin>
+    <id>com.codesprint.ide</id>
+    <name>CodeSprint</name>
+    <vendor url="https://github.com/harshitsingh205/codesprint-jetbrain">Harshit Singh</vendor>
+
+    <description><![CDATA[
+        <p><b>CodeSprint</b> is a lightweight productivity companion for students and professional developers.
+        It lives in a tool window and helps you build a consistent coding habit with a Pomodoro focus timer,
+        daily goals, streak tracking and simple statistics. Works in Android Studio and every IntelliJ-based IDE.</p>
+        <p><i>Focus. Code. Improve.</i></p>
+
+        <h3>Features</h3>
+        <ul>
+            <li><b>Focus timer</b>: 25 minute focus sessions, 5 minute short breaks and 15 minute long breaks, all configurable.
+                Start, pause, resume, reset and switch session type.</li>
+            <li><b>Accurate and reliable</b>: the timer is calculated from timestamps, so it keeps counting while you switch
+                files, close the tool window or restart the IDE. A session that finishes while the IDE is closed is credited
+                the next time it opens.</li>
+            <li><b>Daily goal</b>: pick a target with presets (30m, 1h, 2h, 3h) or a custom value and track your progress.</li>
+            <li><b>Statistics</b>: today's focus time, completed sessions, weekly focus time, goal completion, current streak
+                and longest streak.</li>
+            <li><b>Weekly overview</b>: a seven day chart of completed focus time.</li>
+            <li><b>Motivational reminders</b>: more than 30 professional developer quotes shown at an interval you choose,
+                in the status bar, as a notification, or on demand.</li>
+            <li><b>Status bar timer</b>: always-visible countdown; click to start, pause or resume.</li>
+            <li><b>Native look and feel</b>: follows the IDE theme (light, dark, high contrast) and scales with the IDE.</li>
+        </ul>
+
+        <h3>Privacy</h3>
+        <p>Everything is stored locally in the IDE configuration folder. CodeSprint has no account, no backend and no telemetry,
+        makes no network requests, and never reads your source code.</p>
+
+        <h3>Getting started</h3>
+        <ol>
+            <li>Open the <b>CodeSprint</b> tool window from the right sidebar, or use <b>Tools | CodeSprint</b>.</li>
+            <li>Press <b>Start</b> to begin a focus session.</li>
+            <li>Change durations, goals and reminders in <b>Settings | Tools | CodeSprint</b>.</li>
+        </ol>
+    ]]></description>
+
+    <!-- Only the shared platform module is required, so the plugin installs in Android Studio and all IntelliJ-based IDEs. -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.codesprint.ide.state.CodeSprintSettings"/>
+        <applicationService serviceImplementation="com.codesprint.ide.state.CodeSprintData"/>
+        <applicationService serviceImplementation="com.codesprint.ide.service.TimerService"/>
+        <applicationService serviceImplementation="com.codesprint.ide.service.MotivationService"/>
+
+        <toolWindow id="CodeSprint"
+                    anchor="right"
+                    icon="/icons/codesprint.svg"
+                    canCloseContents="false"
+                    factoryClass="com.codesprint.ide.ui.CodeSprintToolWindowFactory"/>
+
+        <statusBarWidgetFactory id="CodeSprint.StatusBar"
+                                implementation="com.codesprint.ide.ui.CodeSprintStatusBarWidgetFactory"/>
+
+        <notificationGroup id="CodeSprint" displayType="BALLOON"/>
+
+        <applicationConfigurable parentId="tools"
+                                 id="com.codesprint.ide.settings"
+                                 displayName="CodeSprint"
+                                 instance="com.codesprint.ide.settings.CodeSprintConfigurable"/>
+
+        <postStartupActivity implementation="com.codesprint.ide.startup.CodeSprintStartupActivity"/>
+    </extensions>
+
+    <actions>
+        <group id="CodeSprint.Menu" text="CodeSprint" popup="true" icon="/icons/codesprint.svg">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+            <action id="CodeSprint.Toggle" class="com.codesprint.ide.actions.ToggleTimerAction"
+                    text="Start, Pause or Resume Timer" description="Start, pause or resume the CodeSprint timer"/>
+            <action id="CodeSprint.Start" class="com.codesprint.ide.actions.StartTimerAction"
+                    text="Start Timer" description="Start the current CodeSprint session"/>
+            <action id="CodeSprint.Pause" class="com.codesprint.ide.actions.PauseTimerAction"
+                    text="Pause Timer" description="Pause the running CodeSprint session"/>
+            <action id="CodeSprint.Resume" class="com.codesprint.ide.actions.ResumeTimerAction"
+                    text="Resume Timer" description="Resume the paused CodeSprint session"/>
+            <action id="CodeSprint.Reset" class="com.codesprint.ide.actions.ResetTimerAction"
+                    text="Reset Timer" description="Discard the current CodeSprint session"/>
+            <separator/>
+            <action id="CodeSprint.SwitchMode" class="com.codesprint.ide.actions.SwitchSessionTypeAction"
+                    text="Switch Session Type..." description="Choose focus, short break or long break"/>
+            <action id="CodeSprint.ShowMotivation" class="com.codesprint.ide.actions.ShowMotivationAction"
+                    text="Show Motivational Quote" description="Show a motivational quote now"/>
+            <separator/>
+            <action id="CodeSprint.OpenDashboard" class="com.codesprint.ide.actions.OpenDashboardAction"
+                    text="Open Dashboard" description="Open the CodeSprint tool window"/>
+            <action id="CodeSprint.OpenSettings" class="com.codesprint.ide.actions.OpenSettingsAction"
+                    text="Open Settings" description="Open the CodeSprint settings page"/>
+            <action id="CodeSprint.ClearData" class="com.codesprint.ide.actions.ClearDataAction"
+                    text="Clear Stored Data..." description="Delete all CodeSprint sessions, statistics and streaks"/>
+        </group>
+    </actions>
+</idea-plugin>

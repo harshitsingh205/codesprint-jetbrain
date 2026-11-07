@@ -1,0 +1,10 @@
+.gradle/
+build/
+.intellijPlatform/
+.idea/
+*.iml
+out/
+.kotlin/
+local.properties
+*.zip
+!gradle/wrapper/*
