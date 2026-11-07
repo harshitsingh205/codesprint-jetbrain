@@ -2,6 +2,10 @@
 
 All notable changes to CodeSprint for JetBrains IDEs are documented here.
 
+## 1.0.1
+
+- Improved compatibility with latest IntelliJ Platform releases (removed deprecated status bar API override).
+
 ## 1.0.0
 
 - Initial release for Android Studio and all IntelliJ-based IDEs (2023.3 and newer), ported from the CodeSprint VS Code extension.

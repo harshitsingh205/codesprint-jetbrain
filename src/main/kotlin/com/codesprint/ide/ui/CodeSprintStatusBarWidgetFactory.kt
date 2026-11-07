@@ -19,7 +19,6 @@ class CodeSprintStatusBarWidgetFactory : StatusBarWidgetFactory {
     override fun isAvailable(project: Project): Boolean = true
     override fun createWidget(project: Project): StatusBarWidget = CodeSprintStatusBarWidget()
     override fun disposeWidget(widget: StatusBarWidget) = Disposer.dispose(widget)
-    override fun canBeEnabledOn(statusBar: StatusBar): Boolean = true
 
     companion object {
         const val WIDGET_ID = "CodeSprint.StatusBar"
