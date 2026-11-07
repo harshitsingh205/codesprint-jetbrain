@@ -23,11 +23,11 @@ jobs:
         run: |
           ./gradlew buildPlugin --stacktrace 2>&1 | tee build.log
           if [ ${PIPESTATUS[0]} -ne 0 ]; then
-            ERROR_MSG=$(grep -A 10 "FAILURE: Build failed" build.log | tr '\n' ' ')
+            ERROR_MSG=$(grep -E "^e: " build.log | head -n 10 | tr '\n' ' ')
             if [ -z "$ERROR_MSG" ]; then
               ERROR_MSG=$(tail -n 25 build.log | tr '\n' ' ')
             fi
-            echo "::error title=BuildFailure::$ERROR_MSG"
+            echo "::error title=KotlinError::$ERROR_MSG"
             exit 1
           fi
 
