@@ -91,7 +91,7 @@ class RingComponent : JComponent() {
         val g2 = g.antialiased()
         try {
             val stroke = JBUI.scale(8).toFloat()
-            val size = minOf(width, height) - stroke - 2
+            val size = (minOf(width, height) - stroke - 2).toDouble()
             val x = (width - size) / 2.0
             val y = (height - size) / 2.0
             g2.stroke = java.awt.BasicStroke(stroke, java.awt.BasicStroke.CAP_ROUND, java.awt.BasicStroke.JOIN_ROUND)
