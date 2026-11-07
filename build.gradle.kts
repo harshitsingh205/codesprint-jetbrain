@@ -1,5 +1,4 @@
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("java")
@@ -10,15 +9,8 @@ plugins {
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
 kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
+    jvmToolchain(17)
 }
 
 repositories {
@@ -97,5 +89,10 @@ tasks {
     }
     test {
         useJUnit()
+    }
+    signPlugin {
+        onlyIf {
+            !providers.environmentVariable("CERTIFICATE_CHAIN").orNull.isNullOrBlank()
+        }
     }
 }
