@@ -2,6 +2,10 @@
 
 All notable changes to CodeSprint for JetBrains IDEs are documented here.
 
+## 1.0.2
+
+- Replaced deprecated SimpleListCellRenderer with modern Kotlin UI DSL textListCellRenderer for full forward compatibility with future IntelliJ releases.
+
 ## 1.0.1
 
 - Improved compatibility with latest IntelliJ Platform releases (removed deprecated status bar API override).

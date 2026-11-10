@@ -5,11 +5,11 @@ import com.codesprint.ide.core.Settings
 import com.codesprint.ide.state.CodeSprintSettings
 import com.intellij.openapi.options.BoundSearchableConfigurable
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.SimpleListCellRenderer
 import com.intellij.ui.dsl.builder.bindIntValue
 import com.intellij.ui.dsl.builder.bindItem
 import com.intellij.ui.dsl.builder.bindSelected
 import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.listCellRenderer.textListCellRenderer
 
 /** Settings | Tools | CodeSprint. Values are bound straight to the persistent bean. */
 class CodeSprintConfigurable : BoundSearchableConfigurable("CodeSprint", "com.codesprint.ide.settings") {
@@ -51,7 +51,7 @@ class CodeSprintConfigurable : BoundSearchableConfigurable("CodeSprint", "com.co
                 row("Display reminders in:") {
                     comboBox(
                         MotivationalDisplay.values().toList(),
-                        SimpleListCellRenderer.create("") { it?.label ?: "" },
+                        textListCellRenderer { it?.label ?: "" },
                     ).bindItem(
                         { MotivationalDisplay.values().firstOrNull { it.name == bean.motivationalDisplay } },
                         { bean.motivationalDisplay = (it ?: MotivationalDisplay.STATUS_BAR).name },
